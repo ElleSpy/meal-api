@@ -18,7 +18,7 @@ app.post('/api/meals', async (req, res) => {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + apiKey,
-        'anthropic-version': '2023-06-01'
+        'anthropic-version': '2024-06-01'
       },
       body: JSON.stringify({
         model,
