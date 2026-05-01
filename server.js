@@ -8,6 +8,10 @@ app.use(express.json());
 app.post('/api/meals', async (req, res) => {
   const { apiKey, model, max_tokens, system, messages } = req.body;
   
+  if (!apiKey) {
+    return res.status(400).json({ error: 'API key required' });
+  }
+
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -23,6 +27,11 @@ app.post('/api/meals', async (req, res) => {
         messages
       })
     });
+
+    if (!response.ok) {
+      const errData = await response.json();
+      return res.status(response.status).json(errData);
+    }
 
     const data = await response.json();
     res.json(data);
